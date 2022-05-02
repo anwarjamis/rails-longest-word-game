@@ -1,17 +1,14 @@
 <h1>Scramble</h1>
-<% letters = "" %>
 <ul class="list-inline">
   <% @letters.each do |letter| %>
     <li class="list-inline-item text-center align-middle"><h1><%= letter %></h1></li>
-    <% letters += letter %>
   <% end %>
 </ul>
 
-<form action="/score" method="POST">
+<form action="/score" method="post">
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <%= hidden_field_tag :letters, @letters %>
   <label for="attempt">What is the longest word you can find with those letters?</label><br>
   <input type="text" name="attempt" id="attempt">
-  <!-- I should send the grid using a hidden field tag here -->
-  <input id="grid" name="grid" type="hidden" value="<%=letters%>" />
   <input type="submit">
 </form>

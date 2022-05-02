@@ -2,16 +2,16 @@ require 'open-uri'
 require 'json'
 
 class GamesController < ApplicationController
+  VOWELS = %w(A E I O U Y)
   def new
-    @letters = []
-    (0...10).map do
-      @letters << ('a'..'z').to_a.shuffle[1]
-    end
+    @letters = Array.new(5) { VOWELS.sample }
+    @letters += Array.new(5) { (('A'..'Z').to_a - VOWELS).sample }
+    @letters.shuffle!
   end
 
   def score
     @attempt = params[:attempt]
-    grid = params[:grid]
+    grid = params[:letters]
     # Checking if the word is valid in english
     url = "https://wagon-dictionary.herokuapp.com/#{@attempt}"
     serialized_dict = URI.open(url).read
